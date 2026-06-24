@@ -13,7 +13,8 @@ const TaskList = ({ refreshTrigger }) => {
   const fetchTasks = async () => {
     setError(null)
     try {
-      let url = 'http://localhost:8000/api/tasks/'
+      const apiUrl = import.meta.env.VITE_API_URL || 'http://localhost:8000';
+      let url = `${apiUrl}/api/tasks/`
       if (statusFilter !== 'all') {
         url += `?status=${statusFilter}`
       }
@@ -37,7 +38,8 @@ const TaskList = ({ refreshTrigger }) => {
 
   const handleStatusChange = async (taskId, newStatus) => {
     try {
-      const response = await fetch(`http://localhost:8000/api/tasks/${taskId}/`, {
+      const apiUrl = import.meta.env.VITE_API_URL || 'http://localhost:8000';
+      const response = await fetch(`${apiUrl}/api/tasks/${taskId}/`, {
         method: 'PATCH',
         headers: {
           'Content-Type': 'application/json'
